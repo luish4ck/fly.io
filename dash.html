@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard de Emoções</title>
+    <!-- Link do Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Link do Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body class="bg-gray-100 text-gray-800">
+
+    <!-- Cabeçalho -->
+    <header class="bg-blue-600 text-white py-4 shadow-md">
+        <div class="container mx-auto px-4">
+            <h1 class="text-2xl font-bold">Dashboard de Emoções</h1>
+        </div>
+    </header>
+
+
+    <div class="cards-container">
+        <!-- Card 1 -->
+        <div class="card">
+            <h3>Total de Alunos</h3>
+            <p>120</p>
+        </div>
+
+        <!-- Card 2 -->
+        <div class="card">
+            <h3>Emoções Registradas</h3>
+            <p>450</p>
+        </div>
+
+        <!-- Card 3 -->
+        <div class="card">
+            <h3>Alertas Emitidos</h3>
+            <p>15</p>
+        </div>
+    </div>
+
+    <style>
+        /* Container dos cards */
+        .cards-container {
+            display: flex;
+            /* Deixa os cards em linha */
+            gap: 30px;
+            /* Espaçamento entre os cards */
+            justify-content: center;
+            /* Centralizar os cards */
+            margin: 20px;
+            /* Margem em volta */
+        }
+
+        /* Estilização de cada card */
+
+        .card {
+            background-color: white;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            padding: 16px;
+            width: 400px;
+            /* Largura específica conforme imagem */
+            height: 100px;
+            /* Altura fixa */
+            text-align: center;
+        }
+
+        .card h3 {
+            font-size: 14px;
+            color: #333;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+
+        .card p {
+            font-size: 24px;
+            font-weight: 700;
+            color: #4F46E5;
+            margin: 0;
+        }
+    </style>
+
+    <style>
+        canvas {
+            width: 256px !important;
+            /* Largura desejada */
+            height: 256px !important;
+            /* Altura desejada */
+        }
+    </style>
+
+    <!-- Conteúdo Principal -->
+    <main class="container mx-auto px-4 py-6">
+        <!-- Gráfico -->
+        <section class="bg-white shadow-md rounded-lg p-6">
+            <h2 class="text-xl font-semibold mb-4">Gráfico de Emoções Detectadas</h2>
+            <div class="flex justify-center items-center">
+                <canvas id="emotionChart" class="w-32 h-32"></canvas> <!-- Menor, 8rem (128px) -->
+            </div>
+        </section>
+
+        <!-- Tabela de Dados -->
+        <section class="mt-8 bg-white shadow-md rounded-lg p-6">
+            <h2 class="text-xl font-semibold mb-4">Dados Recentes de Análises</h2>
+            <table class="min-w-full table-auto border-collapse border border-gray-300">
+                <thead class="bg-gray-200">
+                    <tr>
+                        <th class="border border-gray-300 px-4 py-2">ID</th>
+                        <th class="border border-gray-300 px-4 py-2">Data</th>
+                        <th class="border border-gray-300 px-4 py-2">Emoção</th>
+                        <th class="border border-gray-300 px-4 py-2">Percentual</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="border border-gray-300 px-4 py-2 text-center">1</td>
+                        <td class="border border-gray-300 px-4 py-2 text-center">16/12/2024</td>
+                        <td class="border border-gray-300 px-4 py-2 text-center">Feliz</td>
+                        <td class="border border-gray-300 px-4 py-2 text-center">70%</td>
+                    </tr>
+                    <tr>
+                        <td class="border border-gray-300 px-4 py-2 text-center">2</td>
+                        <td class="border border-gray-300 px-4 py-2 text-center">16/12/2024</td>
+                        <td class="border border-gray-300 px-4 py-2 text-center">Triste</td>
+                        <td class="border border-gray-300 px-4 py-2 text-center">20%</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+    </main>
+
+
+    <!-- Gráfico 2 -->
+
+    <div class="bg-white shadow-md rounded-lg p-6 w-full h-full">
+        <h3 class="text-lg font-bold text-gray-700">Emoções ao Longo do Tempo</h3>
+        <canvas id="chart2" class="mt-4"></canvas>
+    </div>
+    </div>
+
+
+    <script>
+        const ctx2 = document.getElementById('chart2').getContext('2d');
+        const chart2 = new Chart(ctx2, {
+            type: 'line',
+            data: {
+                labels: ['Seg', 'Ter', 'Qua', 'Qui', 'Sex'],
+                datasets: [{
+                    label: 'Feliz',
+                    data: [10, 20, 15, 25, 30],
+                    borderColor: '#4CAF50',
+                    backgroundColor: 'rgba(76, 175, 80, 0.2)',
+                    tension: 0.3,
+                    fill: true
+                }, {
+                    label: 'Triste',
+                    data: [5, 10, 8, 12, 6],
+                    borderColor: '#FF5722',
+                    backgroundColor: 'rgba(255, 87, 34, 0.2)',
+                    tension: 0.3,
+                    fill: true
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'top'
+                    }
+                },
+                scales: {
+                    x: {
+                        title: {
+                            display: true,
+                            text: 'Dias da Semana'
+                        }
+                    },
+                    y: {
+                        title: {
+                            display: true,
+                            text: 'Quantidade'
+                        }
+                    }
+                }
+            }
+        });
+    </script>
+    </script>
+    </script>
+    <!-- Alerta na tela -->
+    <div class="bg-red-100 border-l-4 border-red-500 text-red-700 p-4 mt-6">
+        <p class="font-bold">Alerta!</p>
+        <p>5 alunos apresentam sinais de depressão. Considere agir imediatamente.</p>
+    </div>
+
+
+    <!-- Filtro -->
+
+    <div class="mt-6">
+        <input type="text" placeholder="Pesquisar aluno..." class="w-full mb-4 p-2 border rounded-md" />
+        <table class="w-full bg-white shadow-md rounded-lg">
+            <thead>
+                <tr class="bg-gray-100">
+                    <th class="text-left p-4">Matrícula</th>
+                    <th class="text-left p-4">Nome</th>
+                    <th class="text-left p-4">Emoção</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="p-4">2023001</td>
+                    <td class="p-4">João Silva</td>
+                    <td class="p-4 text-green-600 font-bold">Feliz</td>
+                </tr>
+                <tr>
+                    <td class="p-4">2023002</td>
+                    <td class="p-4">Maria Oliveira</td>
+                    <td class="p-4 text-red-600 font-bold">Triste</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Link para o arquivo JS -->
+    <script src="script.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Para Meu Amor</title>
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@300;400&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(to bottom, #ffcccc, #ffe6e6);
+            text-align: center;
+            margin: 0;
+            padding: 20px;
+            overflow-x: hidden;
+        }
+
+        h1 {
+            font-family: 'Great Vibes', cursive;
+            font-size: 3rem;
+            color: #d6336c;
+            margin-top: 20px;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: auto;
+            padding: 20px;
+            background: white;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            border-radius: 15px;
+            margin-bottom: 30px;
+        }
+
+        .message {
+            font-size: 1.1rem;
+            color: #555;
+            margin-top: 20px;
+            text-align: left;
+            line-height: 1.6;
+        }
+
+        .moments {
+            margin-top: 30px;
+        }
+
+        .moments-grid {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        .moment {
+            width: 120px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .moment img {
+            width: 100%;
+            height: 120px;
+            object-fit: cover;
+            border-radius: 8px;
+            border: 2px solid #ffb3d1;
+            transition: transform 0.3s ease;
+        }
+
+        .moment:hover img {
+            transform: scale(1.05);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+
+        .moment p {
+            font-size: 0.9rem;
+            color: #d6336c;
+            margin-top: 8px;
+            font-weight: 500;
+        }
+
+        /* Modal para imagem expandida */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.9);
+            overflow: auto;
+        }
+
+        .modal-content {
+            margin: auto;
+            display: block;
+            max-width: 90%;
+            max-height: 90%;
+            margin-top: 50px;
+            animation: zoom 0.3s;
+        }
+
+        @keyframes zoom {
+            from {transform: scale(0.5);}
+            to {transform: scale(1);}
+        }
+
+        .close {
+            position: absolute;
+            top: 15px;
+            right: 35px;
+            color: #fff;
+            font-size: 40px;
+            font-weight: bold;
+            transition: 0.3s;
+            cursor: pointer;
+        }
+
+        .close:hover {
+            color: #ffb3d1;
+        }
+
+        /* Corações flutuantes */
+        .hearts-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+            overflow: hidden;
+        }
+
+        .heart {
+            position: absolute;
+            font-size: 20px;
+            color: red;
+            animation: floating 5s linear infinite;
+            pointer-events: none;
+        }
+
+        @keyframes floating {
+            0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(-100vh) rotate(360deg); opacity: 0; }
+        }
+
+        /* Controles de música */
+        .music-controls {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: rgba(255, 255, 255, 0.8);
+            padding: 10px;
+            border-radius: 50px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+            z-index: 100;
+        }
+
+        .music-controls button {
+            background: #d6336c;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            cursor: pointer;
+            font-size: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .music-controls button:hover {
+            background: #b52b5b;
+        }
+
+        /* Responsividade */
+        @media (max-width: 480px) {
+            .moment {
+                width: 100px;
+            }
+            .moment img {
+                height: 100px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Container de corações flutuantes -->
+    <div class="hearts-container" id="hearts-container"></div>
+
+    <!-- Modal para imagem expandida -->
+    <div id="imageModal" class="modal">
+        <span class="close">&times;</span>
+        <img class="modal-content" id="expandedImage">
+    </div>
+
+    <!-- Controles de música -->
+    <div class="music-controls">
+        <button id="musicToggle">♫</button>
+    </div>
+
+    <!-- Áudio para a música -->
+    <audio id="backgroundMusic" loop>
+        <source src="./Áudio do WhatsApp de 2025-03-30 à(s) 10.40.45_d8c81175.mp3" type="audio/mpeg">
+        <!-- NOTA: Substitua o link acima por um link direto para o arquivo da música -->
+        Seu navegador não suporta o elemento de áudio.
+    </audio>
+
+    <div class="container">
+        <header>
+            <h1>Para Meu Amor</h1>
+        </header>
+        
+        <section class="message">
+            <p>Meu amor,</p>
+            <p>Eu sei que errei, mas o que mais quero agora é consertar tudo. Tudo que eu mais quero é te fazer feliz. Cada momento ao seu lado é único e inesquecível. Só você tem o poder de fazer meu coração bater mais forte, de transformar um simples dia em uma eternidade de felicidade.</p>
+            <p>Como posso te pedir desculpas? Como posso mostrar o quanto você é essencial para mim? Se todos os meus erros pudessem ser apagados, eu faria isso para nunca te magoar.</p>
+            <p>Aqui estão algumas das nossas lembranças mais especiais. Cada imagem tem uma história que me faz sorrir, me faz lembrar dos nossos melhores momentos. Espero que, ao olhar para elas, você também sinta todo o amor que eu sinto por você.</p>
+            <p>Te amo mais do que palavras podem expressar. 💖</p>
+            <p>Se até Jesus perdoou Judas porque você não pode dar uma segunda chance pra eu?</p>
+        </section>
+        
+        <section class="moments">
+            <h2 style="color: #d6336c;">Melhores Momentos</h2>
+            <div class="moments-grid">
+                <!-- Galeria de momentos -->
+                <div class="moment">
+                    <img src="./1.jpg" alt="Nossa primeira mensagem">
+                    <p>Nossa primeira mensagem</p>
+                </div>
+                <div class="moment">
+                    <img src="./2.jpg" alt="Os primeiros elogios">
+                    <p>Os primeiros elogios kakakaka</p>
+                </div>
+                <div class="moment">
+                    <img src="./3.jpg" alt="Kakadeia">
+                    <p>Kakadeia kakaka</p>
+                </div>
+                <div class="moment">
+                    <img src="./4.jpg" alt="Como tudo começou">
+                    <p>Como tudo começou</p>
+                </div>
+                <div class="moment">
+                    <img src="./5.jpg" alt="Primeira visita e primeiro beijo">
+                    <p>A primeira vez que eu fui aí, e o primeiro beijo</p>
+                </div>
+                <div class="moment">
+                    <img src="./6.jpg" alt="Apaixonada em mim">
+                    <p>Apaixonada em mim kakaka</p>
+                </div>
+                <div class="moment">
+                    <img src="./7.jpg" alt="E tome cadeia">
+                    <p>E tome cadeia kakaka</p>
+                </div>
+                <div class="moment">
+                    <img src="./8.jpg" alt="Foto que me apaixonou">
+                    <p>Eu fiquei apaixonado nessa foto sua kakaka</p>
+                </div>
+                <div class="moment">
+                    <img src="./9.jpg" alt="Leandrinha foi de f">
+                    <p>Leandrinha foi de f kakaka</p>
+                </div>
+                <div class="moment">
+                    <img src="./10.jpg" alt="Leandrinha foi de f">
+                    <p>Leandrinha foi de f kakaka</p>
+                </div>
+                <div class="moment">
+                    <img src="./11.jpg" alt="O tanto que eu amo ela">
+                    <p>O tanto que eu amo ela</p>
+                </div>
+                <div class="moment">
+                    <img src="./12.jpg" alt="E continuo amando">
+                    <p>E continuo amando</p>
+                </div>
+                <div class="moment">
+                    <img src="./13.jpg" alt="Nosso primeiro zap">
+                    <p>Nosso primeiro zap kakaka</p>
+                </div>
+                <div class="moment">
+                    <img src="./14.jpg" alt="Achando que manda em mim">
+                    <p>Achando que manda em mim kakaka</p>
+                </div>
+                <div class="moment">
+                    <img src="./15.jpg" alt="E realmente manda">
+                    <p>E realmente manda</p>
+                </div>
+                <div class="moment">
+                    <img src="./16.jpg" alt="Seu presentinho">
+                    <p>Seu presentinho</p>
+                </div>
+                <div class="moment">
+                    <img src="./17.jpg" alt="De novo">
+                    <p>De novo kakaka</p>
+                </div>
+                <div class="moment">
+                    <img src="./18.jpg" alt="A melhor foto com a rainha da festa">
+                    <p>A melhor foto com a rainha da festa</p>
+                </div>
+                <div class="moment">
+                    <img src="./19.jpg" alt="O 'último' eu te amo">
+                    <p>O "último" eu te amo</p>
+                </div>
+            </div>
+        </section>
+        <p>Não quero que esses momentos fiquem só nas memórias. Você mudou a minha vida quando eu estava só. Me perdoa. Eu te amo muito e não quero que tudo acabe assim. Volta comigo, você não vai saber se vai ser diferente se não me der outra oportunidade. Te dou todo tempo do mundo, pensa bem nisso. Não deixa esses momentos se perderem assim. Volta comigo naty, sua gotica</p>
+    </div>
+
+    <script>
+        // Cria corações flutuantes
+        function createHearts() {
+            const container = document.getElementById('hearts-container');
+            const heart = document.createElement('div');
+            heart.innerHTML = '❤️';
+            heart.classList.add('heart');
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.animationDuration = 5 + Math.random() * 10 + 's';
+            heart.style.fontSize = 10 + Math.random() * 20 + 'px';
+            container.appendChild(heart);
+            
+            // Remove o coração após a animação terminar
+            setTimeout(() => heart.remove(), 7000);
+        }
+
+        // Modal para imagens expandidas
+        const modal = document.getElementById("imageModal");
+        const modalImg = document.getElementById("expandedImage");
+        const closeBtn = document.getElementsByClassName("close")[0];
+
+        // Quando clicar em qualquer imagem da galeria
+        document.querySelectorAll('.moment img').forEach(img => {
+            img.onclick = function() {
+                modal.style.display = "block";
+                modalImg.src = this.src;
+                modalImg.alt = this.alt;
+            }
+        });
+
+        // Fechar o modal
+        closeBtn.onclick = function() {
+            modal.style.display = "none";
+        }
+
+        // Fechar ao clicar fora da imagem
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        }
+
+        // Controle de música
+        const music = document.getElementById("backgroundMusic");
+        const musicToggle = document.getElementById("musicToggle");
+        let isPlaying = false;
+
+        musicToggle.addEventListener('click', function() {
+            if (isPlaying) {
+                music.pause();
+                musicToggle.textContent = '♫';
+            } else {
+                music.play();
+                musicToggle.textContent = '❚❚';
+            }
+            isPlaying = !isPlaying;
+        });
+
+        // Inicializa corações e música
+        document.addEventListener('DOMContentLoaded', function() {
+            // Cria alguns corações iniciais
+            for (let i = 0; i < 15; i++) {
+                createHearts();
+            }
+            
+            // Continua criando corações periodicamente
+            setInterval(createHearts, 500);
+            
+            // Tenta iniciar a música automaticamente (pode não funcionar em alguns navegadores devido a políticas de autoplay)
+            music.volume = 0.3; // Volume mais baixo
+            const playPromise = music.play();
+            
+            if (playPromise !== undefined) {
+                playPromise.catch(error => {
+                    // Autoplay foi prevenido, mostra o botão de play
+                    isPlaying = false;
+                    musicToggle.textContent = '♫';
+                }).then(() => {
+                    // Autoplay funcionou
+                    isPlaying = true;
+                    musicToggle.textContent = '❚❚';
+                });
+            }
+        });
+    </script>
+</body>
+</html>
